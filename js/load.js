@@ -12,7 +12,7 @@ $(document).ready(function(){
         var objJSON = eval("(function(){return " + cms_auth + ";})()");
        // alert("usertype:"+objJSON.usertype);
         if(objJSON.usertype=='generalUser')
-            cmsConfig.default_content_id = 31;
+            cmsConfig.default_content_id = 30;
         else
             cmsConfig.default_content_id = 30;
     }
