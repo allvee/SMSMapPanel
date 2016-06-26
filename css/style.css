@@ -258,4 +258,11 @@
 	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 	border-bottom: 20px solid rgba(0, 0, 0, 0.15);
 }
+
+.pass2{
+	backgroundColor: inherit;
+}
+.message{
+	color: transparent;
+}
 /****** tabs end *********/

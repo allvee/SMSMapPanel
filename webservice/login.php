@@ -18,6 +18,7 @@
 		$data['username'] = Sql_Result($row, "username");
 		$data['password'] = Sql_Result($row, "password");
 		$data['usertype'] = Sql_Result($row, "usertype");
+		$data['hasCredit'] = Sql_Result($row, "hasCradit");
 		
 	}
 	$_SESSION["id"] =$data['id'];
@@ -25,6 +26,7 @@
 	$_SESSION["username"] =$data['username'];
 	$_SESSION["password"] =$data['password'];
 	$_SESSION["usertype"] =$data['usertype'];
+	$_SESSION["hasCredit"] =$data['hasCredit'];
 	//print_r($_SESSION);
 	$login = json_encode($data);
 	

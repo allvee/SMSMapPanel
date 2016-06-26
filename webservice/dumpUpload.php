@@ -7,20 +7,19 @@
  */
 
 include_once "lib/utils.php";
-$dbtype     = 'mysql';
-$Server     =  'localhost'; //'192.168.241.12'; //
-$Database   = 'sms_map';
-$UserID     = 'root';
-$Password   = 'nopass';
 include_once "lib/common.php";
-
+include_once "lib/config1.php";
+session_start();
 $output_dir ="list_upload/";
 $data = $_REQUEST;
 $ret='';
 //$campain_list_dropdown = $data['campain_list_dropdown'];
 $campain_list_dropdown ='DummyData';
 $list_name = $data['list_name'];
-
+$userID=$_SESSION["id"];
+$userName=$_SESSION['username'];
+$userType=$_SESSION['usertype'];
+$CreatedBy=$_SESSION['username'];
 if(!$list_name==''){
 
     if (!is_dir($output_dir)){
@@ -38,14 +37,26 @@ if(!$list_name==''){
                 //move the uploaded file to uploads folder;
                 move_uploaded_file($_FILES["upload_file"]["tmp_name"], $output_dir . $_FILES["upload_file"]["name"]);
                 $path='C:/inetpub/wwwroot/SmsMapPanel/webservice/'.$output_dir.$_FILES["upload_file"]["name"];
+                //$path='/var/www/html/SmsMapPanel/webservice/'.$output_dir.$_FILES["upload_file"]["name"];
                 $cn=connectDB();
-                $import= "LOAD DATA LOCAL INFILE '$path' INTO TABLE numberlist (msisdn)
-				SET `NAME` = '$list_name',`PID` = '$list_name$campain_list_dropdown', `description` = '$campain_list_dropdown' , `createtime` = now() , `updatetime` = now()";
 
-                if(Sql_exec($cn,$import)){
-                    $ret= "Import Successful";
-                    $return_data = array('status' => true, 'message' => $ret, 'import'=>$import,'final'=>'yes');
-                }
+                $queryindex="INSERT INTO numberlist_index (Numberlist_Name, CreatedBy, CreateDate) VALUES('$list_name', '$userID', now())";
+               if(Sql_exec($cn,$queryindex))
+               {
+                   $qryselect="SELECT 	MAX(ID) AS NumberListID FROM sms_map.numberlist_index WHERE Numberlist_Name='$list_name'";
+                   $result=Sql_exec($cn,$qryselect);
+                   $row = Sql_fetch_array($result);
+                   $NumberListID = Sql_Result($row, "NumberListID");
+                   $pid=$NumberListID.$campain_list_dropdown;
+                   $import= "LOAD DATA LOCAL INFILE '$path' INTO TABLE numberlist (msisdn)
+				                SET `NAME` = '$NumberListID',`PID` = '$pid', `description` = '$campain_list_dropdown' , `createtime` = now() , `updatetime` = now(),`CreatedBy`='$userID',`UpdatedBy`='$userID', `UserType`='$userType' ";
+
+                   if(Sql_exec($cn,$import)){
+                       $ret= "Import Successful";
+                       $return_data = array('status' => true, 'message' => $ret, 'import'=>$import,'final'=>'yes');
+                   }
+               }
+
             }
         }
         else {

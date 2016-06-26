@@ -5,9 +5,8 @@
 
 function create_number_list(formID){
 
-    var response = common_file_uploader(Dump_Upload_url, formID);
- 
-response = JSON.parse(response);
+ var response = common_file_uploader(Dump_Upload_url, formID);
+ response = JSON.parse(response);
     if (response.status) {
         if(response.final=='yes'){
             alert(response.message);
@@ -38,9 +37,6 @@ function fetchdropdown_starttime(){
         });
         content_service_type_list_options += '</select>';
         $("#js-example-data-array").html(content_service_type_list_options);
-
-//        alert(content_service_type_list_options);
-
     }
 
 }
@@ -62,21 +58,18 @@ function fetchdropdown_endtime(){
         });
         content_service_type_list_options += '</select>';
         $("#js-example-data-array1").html(content_service_type_list_options);
-
-//        alert(content_service_type_list_options);
-
     }
 
 }
 
-function onchange(id){
-    alert("hi");
+/*function onchange(id){
+    //alert("hi");
     $('#Campaign_id').val(this.options[this.selectedIndex].getAttribute('Campaign_id'));
-    alert(this.options[this.selectedIndex].getAttribute('Campaign_id'));
+  //  alert(this.options[this.selectedIndex].getAttribute('Campaign_id'));
 
     //onchange="$('#Campaign_id').val(this.options[this.selectedIndex].getAttribute('Campaign_id'));  var campaign_id=$("#campaign_id").val(); alert(campaign_id);"+
        // "alert(this.options[this.selectedIndex].getAttribute('campaign_id'));";
-}
+}*/
 
 function fetchdropdown(){
     var content_service_type_list = $.ajax({
@@ -108,7 +101,8 @@ function fetchdropdown(){
 function edit_number_list(formID){
 
     var response = connectServerWithForm(editNumberList_url, formID);
-        response = JSON.parse(response);
+    //alert("stop");
+     response = JSON.parse(response);
     if (response.status) {
       alert(response.message);
       showAdditionalMenu('85');
@@ -141,10 +135,10 @@ function loadpageGridProc_number(target, formId) {
                     "columns": [
 
                         { "title": "Name", "class": "center ratailer_width" },
-                        { "title": "NumberCount", "class": "center agent_width" },
+                        { "title": "Number Count", "class": "center agent_width" },
                         //{ "title": "description", "class": "center" },
-                        { "title": "createtime", "class": "center" },
-                        { "title": "updatetime", "class": "center" },
+                        { "title": "Create Time", "class": "center" },
+                        { "title": "Update Time", "class": "center" },
                         { "title": "Action", "class": "center" },
                          ],
                     "order": [[0, "asc"]],
@@ -159,7 +153,7 @@ function loadpageGridProc_number(target, formId) {
     );
 }
 
-function set_data_to_edit_number_list(obj, name, description) {
+function set_data_to_edit_number_list(obj, id, name) {
     var data = [];
     var table = document.getElementById('gridTable');
     var index = obj.parentNode.parentNode.rowIndex;
@@ -169,8 +163,8 @@ function set_data_to_edit_number_list(obj, name, description) {
 
     showAdditionalMenu('90');
     fetchdropdown();
-    $('#last_cname').val(data[2]);
-    $('#last_lname').val(data[0]);
+    $('#last_cname').val("DummyData");
+    $('#last_lname').val(id);
     $("#campain_list_dropdown option[value='" + data[2] + "']").attr('selected', true);
     $('#list_name').val(data[0]);
    // $('#list_cbackname').html("Current: "+data[2]);
@@ -196,7 +190,7 @@ function edit_group_list(obj, id, id) {
     $("#campain_list_dropdown option[ value='" + data[1] + "']").attr('selected', true);
     $("#number_list_dropdown option[ value='" + data[2] + "']").attr('selected', true);
     var campaign_id= $("#campain_list_dropdown").find(':selected').attr('Campaign_id');
-    alert("campaign_id: "+campaign_id);
+   // alert("campaign_id: "+campaign_id);
     $("#Message").val( data[3]);
 }
 
@@ -268,13 +262,13 @@ function delete_group_list(obj, id, id){
     //alert(response.message, response.query);
 }
 
-function delete_number_list(obj, name, description){
+function delete_number_list(obj, id, name){
 
     var dataInfo = {}
+    dataInfo['id']=id;
     dataInfo['name']=name;
-    dataInfo['description']=description;
     var response = connectServer(deletNumberList_url, dataInfo);
-
+//alert("Stop");
     response = JSON.parse(response);
     if(response.status){
         alert(response.message, response.query);

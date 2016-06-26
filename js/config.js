@@ -50,6 +50,12 @@ document.write("<link href='css/reset.css' rel='stylesheet' />");
 document.write("<link href='css/style.css' rel='stylesheet' />");
 document.write("<link href='css/datatable/dataTables.bootstrap.css' rel='stylesheet' />");
 document.write("<link href='css/bootstrap.min.css' rel='stylesheet' />");
+//document.write("<link href='css/bootstrap-datetimepicker.min.css' rel='stylesheet' />");
+//document.write("<link href='css/bootstrap-combined.min.css' rel='stylesheet' />");
+document.write("<link href='js/popup/css/jquery.modal.css' rel='stylesheet' />");
+document.write("<link href='js/popup/css/jquery.modal.theme-atlant.css' rel='stylesheet' />");
+document.write("<link href='js/popup/css/jquery.modal.theme-xenon.css' rel='stylesheet' />");
+
 
 
 // js file including here
@@ -58,6 +64,19 @@ document.write('<script src="js/common.js" type="text/javascript"></script>');
 document.write('<script src="js/popup/jquery_confirm_plugin.js" type="text/javascript"></script>');
 document.write('<script src="js/popup/plugin_edited_finction.js" type="text/javascript"></script>');
 document.write('<script src="js/campaign.js" type="text/javascript"></script>');
+document.write('<script src="js/account.js" type="text/javascript"></script>');
+document.write('<script src="js/payment.js" type="text/javascript"></script>');
+
+
+document.write('<script src="js/datePicker/bootstrap-datepicker.js" type="text/javascript"></script>');
+document.write('<script src="js/datePicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>');
+//document.write('<script src="js/datePicker/jquery.datetimepicker.js" type="text/javascript"></script>');
+document.write('<script src="js/datePicker/bootstrap-datetimepicker.pt-BR.js" type="text/javascript"></script>');
+//document.write('<script src="js/datePicker/jquery.min.js" type="text/javascript"></script>');
+document.write('<script src="js/datePicker/bootstrap.min.js" type="text/javascript"></script>');
+document.write('<script src="js/popup/js/jquery.modal.js" type="text/javascript"></script>');
+document.write('<script src="js/popup/js/jquery.modal.min.js" type="text/javascript"></script>');
+
 
 ////Php web services
 var base_url = cmsConfig.site_root + 'webservice/';
@@ -85,6 +104,13 @@ var column_Data_url_group_delete = base_url + 'group_delete.php';
 
 var get_hour_list_startdate = base_url + 'get_hour_list.php'; // dropdownlist
 
+var Manual_insert_sms = base_url + 'Manual_sms.php';
+
+var column_Data_url_group_dropdown = base_url + 'group_dropdown.php';
+
+var column_Data_url_report_group = base_url + 'report_group_selected.php';
+
+
 
 // al amin
 var column_NameList_url = base_url + 'getCampaignNamelist.php';
@@ -93,11 +119,13 @@ var numberList_url = base_url + 'numberList.php';
 var deletNumberList_url = base_url + 'deletNumberList.php';
 var editNumberList_url = base_url + 'editNumberList.php';
 var getNumberListName = base_url + 'getNumberListName.php';
-
-
-
-
-
-
-	
-
+var add_Account_url = base_url + 'addaccount.php';
+var change_Password_url = base_url + 'changePassword.php';
+var accounts_List_url = base_url + 'accountsList.php';
+var update_Account_url = base_url + 'updateAccount.php';
+var delete_Account_url = base_url + 'deleteAccount.php';
+var docUpload_url = base_url + 'paymentCreate.php';
+var bankNameList_url = base_url + 'bankNameList.php';
+var userList_url = base_url + 'userList.php';
+var paymentList_url= base_url+ 'paymentList.php';
+var getCredit_url= base_url+ 'getCredit.php';

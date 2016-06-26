@@ -7,36 +7,32 @@
  */
 
 include_once "lib/utils.php";
-
-$dbtype     = 'mysql';
-$Server     =  'localhost'; //'192.168.241.12'; //
-$Database   = 'sms_map';
-$UserID     = 'root';
-$Password   = 'nopass';
+include_once "lib/config1.php";
 include_once "lib/common.php";
 
 $data = $_REQUEST;
 $return_data='';
 $name = $data['name'];
-$description = $data['description'];
+$NumberList_ID = $data['id'];
 
 $cn = connectDB();
 
-$query = "DELETE FROM numberlist WHERE NAME='$name' AND description='$description'";
+$query = "DELETE FROM numberlist WHERE NAME='$NumberList_ID' ";
 
-$result = Sql_exec($cn, $query);
+$queryindex = "DELETE FROM numberlist_index WHERE ID='$NumberList_ID' AND Numberlist_Name='$name'";
+//$result = Sql_exec($cn, $query);
 
-if($result){
+if(Sql_exec($cn, $queryindex) && Sql_exec($cn, $query)){
 
     $msg="Secessfully Deleted";
-    $return_data = array('status' => true, 'query' => $query, 'message' => $msg);
+    $return_data = array('status' => true, 'query' => $query, 'queryindex' => $queryindex, 'message' => $msg);
 }
 else
 {
     $msg="Sorry Not deleted";
-    $return_data = array('status' => false, 'query' => $query, 'message' => $msg);
+    $return_data = array('status' => false, 'query' => $query, 'queryindex' => $queryindex, 'message' => $msg);
 }
-Sql_Free_Result($result);
+
 ClosedDBConnection($cn);
 
 echo json_encode($return_data);

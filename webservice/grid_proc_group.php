@@ -8,10 +8,18 @@
 //$fld3=$_REQUEST["Date2"];
 
 include_once "lib/config1.php";
+ session_start();
 $cn = connectDB();
  
 
-$query = "SELECT 	campaign_name, 	number_list_Name, 	date, 	message, status, id	 FROM 	`group`  ";
+if ($_SESSION[usertype] <> 'superUser')
+ 
+
+$query = "SELECT 	campaign_name, 	number_list_Name, 	date, 	message, status, id	 FROM 	`group`   where createdby= '$_SESSION[id]'  ";
+
+else
+   $query = "SELECT 	campaign_name, 	number_list_Name, 	date, 	message, status, id	 FROM 	`group`     ";
+
 
 $result = Sql_exec($cn, $query);
 

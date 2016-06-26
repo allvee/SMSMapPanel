@@ -3,7 +3,7 @@
 include_once "utils.php";
 session_start();
 $dbtype     = 'mysql';
-$Server     =  'localhost'; //'192.168.241.12'; //
+$Server     =  '192.168.241.15'; //'192.168.241.15'; //localhost
 $Database   = 'sms_map';
 $UserID     = 'root';
 $Password   = 'nopass';

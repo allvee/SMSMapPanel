@@ -10,7 +10,7 @@ $(document).ready(function(){
         //alert("in Config");
         // if type = super then 30 else something other
         var objJSON = eval("(function(){return " + cms_auth + ";})()");
-       // alert("usertype:"+objJSON.usertype);
+
         if(objJSON.usertype=='generalUser')
             cmsConfig.default_content_id = 30;
         else

@@ -199,6 +199,9 @@ function common_file_uploader(fetchURL, formId, asyncFlag) {
         asyncFlag = false;
     }
     var formData = new FormData(document.getElementById(formId));
+/*    for (var value of formData.values()) {
+        console.log(value);
+    }*/
     $.ajax({
         url: fetchURL,  //server script to process data
         type: 'POST',

@@ -33,7 +33,6 @@ function loadpageGrid_Generalized(fetchURL, formId) {
 
 
 function loadpageGridProc_campaign_create(target, formId) {
-    //alert('hi');
 
     var campaignname = $("#Campaign").val();
     var NAME = $("#NAME").val();
@@ -113,7 +112,6 @@ function loadpageGridProc_campaign_create(target, formId) {
             $('#grid').html('<table class="table table-striped table-bordered table-hover responsive" id="gridTable"></table>');
 
             input = JSON.parse(input);
-//            alert(input);
 
             if (input == 1) {
                 alert('Campaign created Successfully');
@@ -129,7 +127,6 @@ function loadpageGridProc_campaign_create(target, formId) {
 }
 
 function loadpageGridProc_group_create(target, formId) {
-    //alert('hi');
 
     var name = $("#name").val();
 
@@ -140,10 +137,6 @@ function loadpageGridProc_group_create(target, formId) {
     var zipcode = $("#zipcode").val();
 
     var date = $("#datepicker").val();
-
-    //    alert(endtime);
-
-    
 
     if (name == '') {
         alert(" Please give input in Name");
@@ -196,7 +189,6 @@ function loadpageGridProc_group_create(target, formId) {
             $('#grid').html('<table class="table table-striped table-bordered table-hover responsive" id="gridTable"></table>');
 
             input = JSON.parse(input);
-            //            alert(input);
 
             if (input == 1) {
                 alert('Group created Successfully');
@@ -264,7 +256,6 @@ function loadpageGrid_Rupon(fetchURL, formId) {
 
 function loadLogin1(target, formId)
 {
-    alert("I am in Login1");
        postFormData('cmsLoginForm', login_check_url, function (data) {
         if (data.readyState == 4) {
             if (data.response != false) 
@@ -281,6 +272,7 @@ function loadLogin1(target, formId)
                     auth_user.username = obj.username;
                     auth_user.password = obj.password;
                     auth_user.usertype = obj.usertype; // added by al amin
+                    auth_user.hasCredit = obj.hasCredit; // added by al amin
 
                     var auth_session_data = JSON.stringify(auth_user);
                     //alert(auth_session_data);
@@ -292,10 +284,10 @@ function loadLogin1(target, formId)
                 else
                 {
                     destroySession('cms_auth');
-                    alert('Username and password does not match.');
+                    alert('Username and password does not matched.');
                 }
             } else {
-                alert('Username and password does not match.');
+                alert('Username and password does not matched.');
             }
         }
     });
@@ -356,21 +348,20 @@ function showAdditionalMenu(content_id)
 //        fetchDatarobi("#serviceCheckBox_robi", column_Data_url_robi);
 
     }
-    else if (content_id == 86) {
-        showPage(content_id);
-//        fetchDatabl("#serviceCheckBox_bl", column_Data_url_bl);
 
-    }
 
      else if (content_id == 87) {
         showPage(content_id);
-//        fetchDatabl("#serviceCheckBox_bl", column_Data_url_bl);
-
+          load_payments_list();
     }
 
-     else if (content_id == 88) {
+    else if (content_id == 1011) {
         showPage(content_id);
-//        fetchDatabl("#serviceCheckBox_bl", column_Data_url_bl);
+
+    }
+     else if (content_id == 88) { // accounts management(admin)
+        showPage(content_id);
+          load_accounts_list();
 
     }
 
@@ -387,6 +378,14 @@ function showAdditionalMenu(content_id)
         myFunction();
         myFunction1();
         //        fetchDatarobi("#serviceCheckBox_robi", column_Data_url_robi);
+
+    }
+
+    else if (content_id == 86) {
+        showPage(content_id);
+        $("#datepicker").datepicker();
+        $("#datepicker1").datepicker();
+        fetchdropdown_grouplist();
 
     }
 
@@ -431,9 +430,38 @@ function showAdditionalMenu(content_id)
 //        myFunction1();
 
     }
+      else if (content_id == 40) {
+          showPage(content_id);
 
-   // showAdditionalMenu('97');
-   	
+      }
+      else if (content_id == 41) {
+          showPage(content_id);
+
+      }
+      else if (content_id == 42) {
+          showPage(content_id);
+
+      }
+      else if (content_id == 43) {
+          showPage(content_id);
+
+      }
+      else if (content_id == 50) {
+          showPage(content_id);
+          $("#payment_date").datepicker();
+         // $("#payment_date").datetimepicker();
+          //$("#datetimepicker").datepicker();
+
+        $('#datetimepicker').datetimepicker({
+              format: 'dd/MM/yyyy hh:mm:ss',
+              language: 'pt-BR'
+          });
+
+
+          fetchBankList();
+          fetchUserList();
+
+      }
 }
 function connectServer(fetchURL, dataInfo, asyncFlag) {
 
@@ -494,29 +522,12 @@ function loadpageGridProc_group(target, formId) {
                     {"title": "DATE", "class": "center"},
                     {"title": "Status", "class": "center"},
                     {"title": "Action", "class": "center"}
-                    //{"title": "Branded/Non-Branded", "class": "center"}
                 ],
-                //"columnDefs": [
-                //     {
-                //         "targets": [ 0 ],
-                //         "visible": false,
-                //         "searchable": false
-                //     },
-                //     {
-                //         "targets": [ 4 ],
-                //         "visible": false
-                //     }
-                // ],
-
 
                 error: function (input) {
                     alert("error");
                 }
             });
-
-
-           // dTable.fnSetColumnVis(0, false);
-          //  dTable.fnSetColumnVis(4, false);
 
         }
     });
@@ -567,24 +578,11 @@ function loadpageGridProc_campaign(target, formId) {
                     { "title": "End Date", "class": "center" },
                      { "title": "Start Time", "class": "center" },
                     { "title": "End Time", "class": "center" },
-                    { "title": "Id", "class": "center" },
-                        { "title": "Action", "class": "center" }
-//                { "title": "ACTION", "class": "center ratailer_width",
-//                    "fnCreatedCell":
-//                               function (nTd, sData, oData, iRow, iCol) {
-//                                   var myJsonString = JSON.stringify(oData);
-//                                   $(nTd).html("<div id='btnDiv_" + iRow.toString() + "'><button class='editBut' ID='btn_" + iRow + "' onclick='clicked(" + myJsonString + "," + iRow + ");return false;' >Edit</button></div>");
-//                               }
-//                }
-                ]
-                // "order": [[0, "desc"]]
-
-                //              
+                  //  { "title": "Id", "class": "center" },
+                    { "title": "Action", "class": "center" }
+                    ]
             });
-            //====================================================
 
-
-            //$("#grid").html(input);
         },
         error: function (input) {
             alert("error");
@@ -600,8 +598,8 @@ function clicked(split, dataIndex) {
     var fld1 = split[2];
     var fld2 = split[5];
     var fld3 = comments;
-    alert(fld1);
-    alert(fld1);
+   // alert(fld1);
+   // alert(fld1);
     return;
     $.ajax({
         type: "POST",
@@ -983,4 +981,206 @@ function loadpageGridProc_group_delete(target, formId) {
         }
     }
     );
+}
+
+function loadpageGridProc_Manual_send (target, formId) {
+    //   alert('hi');
+
+    var Mobile = $("#Mobile").val();
+   
+    var Message = $("#Message").val();
+   
+
+//    alert("id" + id + "campaign_id:" + campaign_id);
+    if (Message == '') {
+        alert(" Please give input in  Message/Text");
+        return;
+    }
+
+    if (Mobile == '') {
+        alert(" Please give input in Mobile No ");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        data: {
+            'Message': Message,
+            'Mobile': Mobile          
+
+        },
+        url: Manual_insert_sms,
+        async: true,
+        datatype: 'json',
+        success: function (input) {
+            $('#grid').html('<table class="table table-striped table-bordered table-hover responsive" id="gridTable"></table>');
+
+            input = JSON.parse(input);
+            //            alert(input);
+
+            if (input == 1) {
+                alert('Sms Inserted Successfully');
+               // showAdditionalMenu('1011');
+            }
+            else alert('Your credit limit is zero now .Please Contact with your Panel Administrator. ');
+
+        },
+        error: function (input) {
+            alert("error");
+        }
+    }
+    );
+
+    var dataInfo = {};
+    var response = connectServer(getCredit_url, dataInfo);
+    response = JSON.parse(response);
+   // alert(response);
+    $('#has_credits').html(response+" Credits");
+}
+
+
+// function group_dropdown() 
+function myFunction3() {
+    /*var data_all = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'try001' },
+    { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, 
+    { id: 4, text: 'wontfix' }];
+    */
+    //{"1":"try001","11103":"LF#4358\/2010","11122":"LF#4358\/2010","12343":"BG#20107159","12344":"BG#20101161"}
+    //{"id":"12344","text":"BG#20101161"}
+    //[{"id":"1","text":"try001"},{"id":"11103","text":"LF#4358\/2010"},{"id":"11122","text":"LF#4358\/2010"},
+    //{"id":"12343","text":"BG#20107159"},{"id":"12344","text":"BG#20101161"}]
+    $.ajax({
+        type: "POST",
+        url: column_Data_url_group_dropdown,
+        async: true,
+        datatype: 'json',
+        success: function (input) {
+
+            input = JSON.parse(input)
+            //alert(input);
+            $("#js-example-data-array").select2({ data: input });
+            //$("#getData").html(input);
+        },
+        error: function (input) {
+            alert("error");
+        }
+    }
+    );
+    //alert("hello");
+    // array(array('dke'=>0,'inde'=>'y'),);
+
+
+}
+
+
+function loadpageGridProc_Report(target, formId) {
+
+    var campain = $("#js-example-data-array").val();
+    var id = $("#js-example-data-array").find(':selected').attr('id'); //
+    //    alert(id);
+    var startdate = $("#datepicker").val();
+    var enddate = $("#datepicker1").val();
+
+    if (startdate == '') {
+        alert(" Please give input in  Start date");
+        return;
+    }
+    if (enddate == '') {
+        alert(" Please give input in  End date");
+        return;
+    }
+
+    if (campain == '') {
+        alert(" Please give input in  campaign");
+        return;
+    }
+
+    // var campaign_id = $("#"+campain_list).attr('Campaign_id');
+    // var campaign_id = $("#js-example-data-array3").find(':selected').attr('id');
+
+    $.ajax({
+        type: "POST",
+        data: {
+            'campain': campain,
+            'groupid': id,
+            'startdate': startdate,
+            'enddate': enddate
+        },
+        url: column_Data_url_report_group,
+        async: true,
+        datatype: 'json',
+        success: function (input) {
+            $('#grid').html('<table class="table table-striped table-bordered table-hover responsive" id="gridTable"></table>');
+
+            input = JSON.parse(input);
+            //alert(input);
+            //==============================================================
+            var dTable = $('#gridTable').dataTable({
+                "bFilter": false,
+                "data": input,
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "columns": [
+
+                    { "title": "Total", "class": "center ratailer_width" },
+                    { "title": "campaign", "class": "center agent_width" },
+                    { "title": "msg", "class": "center" },
+                    { "title": "msgStatus", "class": "center" }
+//                    { "title": "createtime", "class": "center" },
+//                    { "title": "updatetime", "class": "center" },
+
+
+
+                //                { "title": "ACTION", "class": "center ratailer_width",
+                //                    "fnCreatedCell":
+                //                               function (nTd, sData, oData, iRow, iCol) {
+                //                                   var myJsonString = JSON.stringify(oData);
+                //                                   $(nTd).html("<div id='btnDiv_" + iRow.toString() + "'><button class='editBut' ID='btn_" + iRow + "' onclick='clicked(" + myJsonString + "," + iRow + ");return false;' >Edit</button></div>");
+                //                               }
+                //                }
+                ]
+                // "order": [[0, "desc"]]
+
+                //              
+            });
+            //====================================================
+
+
+            //$("#grid").html(input);
+        },
+        error: function (input) {
+            alert("error");
+        }
+    }
+    );
+}
+
+
+function fetchdropdown_grouplist() {
+    var content_service_type_list = $.ajax({
+        url: column_Data_url_group_dropdown,
+        async: false
+    });
+    if (content_service_type_list.readyState == 4 && content_service_type_list.status == 200) {
+
+        var content_service_type_lists = JSON.parse(content_service_type_list.responseText);
+
+        var content_service_type_list_options = '<select name="js-example-data-array" >';
+        var flag = 0;
+        $.each(content_service_type_lists, function (index, value) {
+            /*  if(flag==0){
+            content_service_type_list_options += '<option  value="">Select One</option>';
+            flag=1;
+            }
+            else*/
+            content_service_type_list_options += '<option id= "' + value.id + '" Campaign_id="' + value.id + '" value="' + value.text + '">' + value.text + '</option>';
+
+
+        });
+        content_service_type_list_options += '</select>';
+        $("#js-example-data-array").html(content_service_type_list_options);
+
+    }
+
 }

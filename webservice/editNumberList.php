@@ -7,32 +7,32 @@
  */
 
 include_once "lib/utils.php";
-$dbtype     = 'mysql';
-$Server     =  'localhost'; //'192.168.241.12'; //
-$Database   = 'sms_map';
-$UserID     = 'root';
-$Password   = 'nopass';
 include_once "lib/common.php";
-
+include_once "lib/config1.php";
+session_start();
 $data = $_REQUEST;
-//print_r($_REQUEST);
 $return_data='';
-$last_cname=$data['last_cname'];
-$last_lname=$data['last_lname'];
+
+$last_cname='DummyData';
+$NumberListID=$data['last_lname']; //found ID
 //$campain_list_dropdown = $data['campain_list_dropdown'];
 $campain_list_dropdown ='DummyData';
 $list_name = $data['list_name'];
+$userID=$_SESSION["id"];
+$userName=$_SESSION['username'];
+$userType=$_SESSION['usertype'];
 
 $cn=connectDB();
-$query= "UPDATE numberlist SET `NAME` = '$list_name', `PID`='$list_name$campain_list_dropdown',`description` = '$campain_list_dropdown' , `createtime` = now() , `updatetime` = now() WHERE `PID`='$last_lname$last_cname'";
+$queryindex="UPDATE numberlist_index SET Numberlist_Name = '$list_name' WHERE id='$NumberListID'";
+$query= "UPDATE numberlist SET  `updatetime` = now(),`UpdatedBy`='$userID' WHERE `NAME`='$NumberListID'";
 
-if(Sql_exec($cn,$query)){
+if(Sql_exec($cn,$queryindex) && Sql_exec($cn,$query) ){
     $ret= "Update Successful";
-    $return_data = array('status' => true, 'message' => $ret, 'query'=>$query);
+    $return_data = array('status' => true, 'message' => $ret, 'query'=>$query, 'queryindex'=>$queryindex);
 }
 else {
     $ret= "Sorry not Updated";
-    $return_data = array('status' => false, 'query'=>$query, 'message' => $ret);
+    $return_data = array('status' => false, 'query'=>$query,  'queryindex'=>$queryindex, 'message' => $ret);
 }
 
 ClosedDBConnection($cn);

@@ -459,9 +459,9 @@ function genereateHeader(id,target)
 
         if(data.readyState == 4)
         {
-		   // var headerFooterHtml = JSON.parse(data.responseText);
-           // $(id).html(escapeSpecialChar(headerFooterHtml[0].header));
-            //cmsAuthView(target);
+		    var headerFooterHtml = JSON.parse(data.responseText);
+            $(id).html(escapeSpecialChar(headerFooterHtml[0].header));
+            cmsAuthView(target);
         }
     });
 }
@@ -1471,10 +1471,16 @@ function processHeaderAndFooter() {
             var headerFooterHtml = JSON.parse(data.responseText);
             var header_dom = $("[data-cmsElement=" + cmsConfig.header + "]");
             var footer_dom = $("[data-cmsElement=" + cmsConfig.footer + "]");
-			
-           
+            var cms_auth = checkSession('cms_auth');
+            var objJSON = eval("(function(){return " + cms_auth + ";})()");
+            var username =objJSON.username;
+            var credit = objJSON.hasCredit;
             $(header_dom).html(escapeSpecialChar(headerFooterHtml[0].header));
             $(footer_dom).html(escapeSpecialChar(headerFooterHtml[0].footer));
+            $('#loguser').html(" &nbsp;&nbsp;&nbsp;&nbsp;( "+username+" )");  //  added by al amin
+            $('#has_credits').html(credit+" Credits");  //  added by al amin
+
+
         }
     });
 }

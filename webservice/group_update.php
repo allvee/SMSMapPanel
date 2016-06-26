@@ -18,9 +18,10 @@ $Message =	$_REQUEST["Message"];
 $id =	$_REQUEST["id"];
 
 include_once "lib/config1.php";
+ session_start();
 $cn = connectDB();
 
-$query = " update `group` set campaign_name='$campain_list', campaign_id='$campaign_id', number_list_Name='$number_list',date=now(),message='$Message' where   id='$id' ";
+$query = " update `group` set updatedby= '$_SESSION[id]',  campaign_name='$campain_list', campaign_id='$campaign_id', number_list_Name='$number_list',date=now(),message='$Message' where   id='$id' ";
 
 //$query = "insert into 	`group` ( 	name, 	email, 	date, 	company, 	city, 	zipcode)
 //                         VALUES  ( '$NAME','$email','$DATE','$company','$city','$zipcode' )  ";

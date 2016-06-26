@@ -23,13 +23,6 @@ $enddate =	$_REQUEST["enddate"];
 $starttime =	$_REQUEST["starttime"];
 $endtime=	$_REQUEST["endtime"];
 
-//echo $startdate1 =date($startdate);
- 
-//echo strtotime("12/31/2004");// $enddate1 =date($enddate); 
-//echo "12/31/2004 - %V,%G,%Y = " . strftime("%V,%G,%Y",strtotime("12/31/2004")) . "\n";
-
-//$now=date($startdate);
-//     echo   $ymd = DateTime::createFromFormat('Y-m-d', $now)->format('Y-m-d');
 $date=date_create($startdate);
 $startdate= date_format($date,"Y-m-d H:i:s");
 
@@ -37,38 +30,20 @@ $startdate= date_format($date,"Y-m-d H:i:s");
 $date=date_create($enddate);
 $enddate= date_format($date,"Y-m-d H:i:s");
 
-
-
-//$campaignname=
-//&NAME=
-//&STATUS=
-//&channels=
-//&estbudget=
-//&spent=
-//&smsno=
-//&startdate=
-//&enddate=
-//&starttime=
-//&endtime=
-
-
- 
-    
-//$fld1=$_REQUEST["fld1"];
-//$fld2=$_REQUEST["Date1"];
-//$fld3=$_REQUEST["Date2"];
-
-
-
+session_start();
+$userName=$_SESSION['username'];
+$userType=$_SESSION['usertype'];
+$CreatedBy=$_SESSION['username'];
 include_once "lib/config1.php";
+  session_start();
 $cn = connectDB();
  
 //$query = "exec pSInsuranceInfo '" . $fld1 ."'";
 
 
 
-$query = "insert into 	campaign (campaignname, 	NAME, 	STATUS, 	channels, 	estbudget, 	spent, 	smsno, 	startdate, 	enddate, 	starttime, 	endtime)
-	                     VALUES  ('$campaignname','$NAME','$STATUS','$channels','$estbudget','$spent','$smsno','$startdate','$enddate','$starttime','$endtime')  ";
+$query = "insert into 	campaign (campaignname, 	NAME, 	STATUS, 	channels, 	estbudget, 	spent, 	smsno, 	startdate, 	enddate, 	starttime, 	endtime,createdby)
+	                     VALUES  ('$campaignname','$NAME','$STATUS','$channels','$estbudget','$spent','$smsno','$startdate','$enddate','$starttime','$endtime','$_SESSION[id]')  ";
 
  $ret = Sql_exec($cn, $query);
 

@@ -65,9 +65,14 @@ alert(campain_list+number_list+Message+campaign_id);
 
                 if (input == 1) {
                     alert('Group created Successfully');
+                    var dataInfo = {};
+                    var response = connectServer(getCredit_url, dataInfo);
+                    response = JSON.parse(response);
+                    // alert(response);
+                    $('#has_credits').html(response+" Credits");
                     showAdditionalMenu('100');
                 }
-                else alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
+                else alert('Your credit limit is zero or less than the numberlist you imported now .Please Contact with your Panel Administrator. ');
 
             },
             error: function (input) {
@@ -75,6 +80,8 @@ alert(campain_list+number_list+Message+campaign_id);
             }
         }
     );
+
+
 
 }
 
