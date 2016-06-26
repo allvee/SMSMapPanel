@@ -9,14 +9,17 @@ function create_number_list(formID){
  response = JSON.parse(response);
     if (response.status) {
         if(response.final=='yes'){
-            alert(response.message);
+           // alert(response.message);
+            WarningMessage('success', 'Success', response.message);
             showAdditionalMenu('85');
         }
         else
-        alert(response.message);
+        //alert(response.message);
+         WarningMessage('error', 'Error', response.message);
     }
     else
-    alert(response.message);
+   // alert(response.message);
+        WarningMessage('error', 'Error', response.message);
 
 }
 
@@ -105,10 +108,12 @@ function edit_number_list(formID){
      response = JSON.parse(response);
     if (response.status) {
       alert(response.message);
+        WarningMessage('success', 'Success', response.message);
       showAdditionalMenu('85');
     }
     else
-        alert(response.message);
+        //alert(response.message);
+        WarningMessage('error', 'Error', response.message);
 }
 
 function loadpageGridProc_number(target, formId) {
@@ -237,7 +242,8 @@ function delete_campaign_list(obj, id, id){
     response = JSON.parse(response);
     //alert(response.status);
     if(response==1){
-         alert('campaign Deleted Successfully');
+         //alert('campaign Deleted Successfully');
+        WarningMessage('success', 'Success', 'campaign Deleted Successfully');
         showAdditionalMenu('81');
     }
     //alert(response.message, response.query);
@@ -256,7 +262,8 @@ function delete_group_list(obj, id, id){
     response = JSON.parse(response);
     //alert(response.status);
     if(response==1){
-         alert('Group Deleted Successfully');
+         //alert('Group Deleted Successfully');
+        WarningMessage('success', 'Success', 'Group Deleted Successfully');
         showAdditionalMenu('100');
     }
     //alert(response.message, response.query);
@@ -271,10 +278,12 @@ function delete_number_list(obj, id, name){
 //alert("Stop");
     response = JSON.parse(response);
     if(response.status){
-        alert(response.message, response.query);
+        //alert(response.message);
+        WarningMessage('success', 'Success', response.message);
         showAdditionalMenu('85');
     }
 //   
 else
- alert(response.message, response.query);
+ //alert(response.message, response.query);
+  WarningMessage('error', 'Error', response.message);
 }

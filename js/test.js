@@ -812,11 +812,13 @@ function loadpageGridProc_campaign_update(target, formId) {
         return;
     }
     if (startdate == '') {
-        alert(" Please give input in  Start date");
+        //alert(" Please give input in  Start date");
+        WarningMessage('Warning', 'Warning', 'Please give input in  Start date');
         return;
     }
     if (enddate == '') {
-        alert(" Please give input in  End date");
+        //alert(" Please give input in  End date");
+        WarningMessage('Warning', 'Warning', 'Please give input in  End date');
         return;
     }
 
@@ -848,7 +850,8 @@ function loadpageGridProc_campaign_update(target, formId) {
             //            alert(input);
 
             if (input == 1) {
-                alert('Campaign updated Successfully');
+                //alert('Campaign updated Successfully');
+                WarningMessage('success', 'Success', 'Campaign updated Successfully');
             }
             else alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
 
@@ -873,9 +876,10 @@ function loadpageGridProc_group_update(target, formId) {
    // var zipcode = $("#zipcode").val();
 //    var date = $("#datepicker").val();
 
-alert("id"+id+"campaign_id:"+campaign_id);
+//alert("id"+id+"campaign_id:"+campaign_id);
     if (Message == '') {
-        alert(" Please give input in  Message/Text");
+        //alert(" Please give input in  Message/Text");
+
         return;
     }
 
@@ -901,10 +905,12 @@ alert("id"+id+"campaign_id:"+campaign_id);
             //            alert(input);
 
             if (input == 1) {
-                alert('Group updated Successfully');
+               // alert('Group updated Successfully');
+                WarningMessage('success', 'Success', 'Group updated Successfully');
                 showAdditionalMenu('100');
             }
-            else alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
+            else
+                alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
 
         },
         error: function (input) {
@@ -935,10 +941,12 @@ function loadpageGridProc_campaign_delete(target, formId) {
             //            alert(input);
 
             if (input == 1) {
-                alert('Campaign deleted Successfully');
+               // alert('Campaign deleted Successfully');
+                WarningMessage('success', 'Success', 'Campaign deleted Successfully');
             }
-            else alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
-
+            else
+                //alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
+                WarningMessage('error', 'Error', 'Not Deleted');
         },
         error: function (input) {
             alert("error");
@@ -971,9 +979,12 @@ function loadpageGridProc_group_delete(target, formId) {
             //            alert(input);
 
             if (input == 1) {
-                alert('Group deleted Successfully');
+                //alert('Group deleted Successfully');
+                WarningMessage('success', 'Success', 'Group deleted Successfully');
             }
-            else alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
+            else
+                //alert('Please enter valid Sender Number OR valid CSV file to Import OR valid Prompt file ');
+                WarningMessage('error', 'Error', 'Not Deleted');
 
         },
         error: function (input) {
@@ -993,12 +1004,14 @@ function loadpageGridProc_Manual_send (target, formId) {
 
 //    alert("id" + id + "campaign_id:" + campaign_id);
     if (Message == '') {
-        alert(" Please give input in  Message/Text");
+        //alert(" Please give input in  Message/Text");
+        WarningMessage('Warning', 'Warning', 'Please give input in  Message/Text');
         return;
     }
 
     if (Mobile == '') {
-        alert(" Please give input in Mobile No ");
+        //alert(" Please give input in Mobile No ");
+        WarningMessage('Warning', 'Warning', 'Please give input in Mobile Number');
         return;
     }
 
@@ -1019,11 +1032,20 @@ function loadpageGridProc_Manual_send (target, formId) {
             //            alert(input);
 
             if (input == 1) {
-                alert('Sms Inserted Successfully');
+               // alert('Sms Inserted Successfully');
                // showAdditionalMenu('1011');
-            }
-            else alert('Your credit limit is zero now .Please Contact with your Panel Administrator. ');
 
+                WarningMessage('success', 'Success', 'Sms Inserted Successfully');
+                var dataInfo = {};
+                var response = connectServer(getCredit_url, dataInfo);
+                response = JSON.parse(response);
+                // alert(response);
+                $('#has_credits').html(response+" Credits");
+                showAdditionalMenu('1011');
+            }
+            else
+                //alert('Your credit limit is zero now .Please Contact with your Panel Administrator. ');
+                WarningMessage('error', 'Error', 'Your credit limit is zero now .Please Contact with your Panel Administrator.');
         },
         error: function (input) {
             alert("error");
@@ -1031,11 +1053,6 @@ function loadpageGridProc_Manual_send (target, formId) {
     }
     );
 
-    var dataInfo = {};
-    var response = connectServer(getCredit_url, dataInfo);
-    response = JSON.parse(response);
-   // alert(response);
-    $('#has_credits').html(response+" Credits");
 }
 
 

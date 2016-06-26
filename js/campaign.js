@@ -42,7 +42,7 @@ function campaign_group_log(target, formId) {
         alert(" Please select Campaign List");
         return;
     }
-alert(campain_list+number_list+Message+campaign_id);
+//alert(campain_list+number_list+Message+campaign_id);
     $.ajax({
             type: "POST",
             data: {
